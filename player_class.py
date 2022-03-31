@@ -1,10 +1,6 @@
 import  math
 import  json
 # from fitness_tools.meals.meal_maker import MakeMeal
-try:
-    with open("urfit_data.json") as f:
-        data = json.load(f)
-except:data={}
 class  Player:
     def __init__(self,name,age,waight,hieght,gender,nick,waist,num_train_per_weak,player_target,player_activ,num_of_meals_per_day):
         self.name = name
@@ -191,7 +187,21 @@ class  Player:
         protien_from_waight=(int(self.waight))*1.02
         protien_per_Day=protien_from_waight
         return protien_per_Day
-
+    def target_cals(self):
+        Player_target_cals=0
+        if self.player_activ == "1":
+            Player_target_cals=int(self.cals())*1.25
+        elif self.player_activ=="2":
+            Player_target_cals=int(self.cals())*1.375
+        elif self.player_activ=="3":
+            Player_target_cals=int(self.cals())*1.55
+        elif self.player_activ=="4":
+            Player_target_cals=int(self.cals())*1.725
+        elif self.player_activ=="5":
+            Player_target_cals=int(self.cals())*1.9
+        if self.player_target =="weight_loss":
+            Player_target_cals=Player_target_cals*0.65
+        return Player_target_cals
     def target_carbs(self):
         if self.player_activ == "1":
             carbs= int(self.cals()) * 0.30
@@ -212,37 +222,62 @@ class  Player:
     def body_mass(self):
         bmi=int(self.waight)/((int(self.hieght)/100)**2)
         return bmi
-
+    def personal_data(self):
+        data={
+            "age":self.age,
+            "waight":self.waight,
+            "height":self.hieght,
+            "gender":self.gender,
+            "nick":self.nick,
+            "waist":self.waist,
+            "num_train_per_weak":self.num_train_per_weak,
+            "num_of_meals_per_day":self.num_of_meals_per_day,
+            "player_activ":self.player_activ,
+            "name":self.name,
+            "cals":self.cals(),
+            "target_cals":self.target_cals(),
+            "fats":self.fats(),
+            "fats_discription":self.fats_discription(),
+            "ideal_fats":self.ideal_fat(),
+            "body_mass":self.body_mass(),
+            "max_protien":self.get_max_protien(),
+            "Min_protien":self.get_min_protien(),
+            "breakfast_cals":self.get_cals_for_breakfast(),
+            "launch_cals":self.get_cals_for_launch(),
+            "dinner_cals":self.get_cals_for_dinner(),
+            "Additionals_cals":self.get_cals_for_additional(),
+        }
+        return  data
 
 # payer= Player("ahmed","25","86","183","male","41","99","15","weight_loss","2","4")
-payer= Player(age="34",waight="76",hieght="175",gender="male",nick="39",waist="93",player_activ="5",player_target="weight_loss",num_train_per_weak="6",num_of_meals_per_day="3")
-print("fats",payer.fats())
-print("fats discriptions",payer.fats_discription())
-# print("target cals",payer.target_cals())
-print("cals",payer.cals())
-print("target breakfast",payer.get_cals_for_breakfast())
-print("target dinner",payer.get_cals_for_dinner())
-print("additional",payer.get_cals_for_launch())
-print("ideal fats",payer.ideal_fat())
-print("protien",payer.get_min_protien())
-print("carvs",payer.target_carbs())
-#name,age,waight,hieght,gender,nick,waist,num_train_per_weak,player_target,player_activ,num_of_meals_per_day
-# payer1= Player("mohammed","25","86","183","male","41","99","15","weight_loss","3","3")
-# payer2= Player("esraa","25","86","183","male","41","99","15","weight_loss","4","4")
-# payer3= Player("mohammedy","25","86","183","male","41","99","15","weight_loss","5","5")
-# payer4= Player("magdi","25","86","183","male","41","99","15","weight_loss","6","6")
-# payer.add_name_data()
-# payer1.add_name_data()
-# payer2.add_name_data()
-# payer3.add_name_data()
-# payer4.add_name_data()
-# print(payer.fats(),payer.fats_discription())
-# print(payer.get_cals_for_breakfast(),"cals for break fast","prtin up",payer.get_max_protien()," min ",int(payer.get_min_protien()))
-# print(payer.target_cals(),"target cals")
-# print(payer.get_max_protien(),"protiens")
-# print(payer.fats())
-# print(payer.target_carbs())
-# print(payer.)
-# #to lose 0.5kg / weak 69% of cals
-#90% .25kg
-#61% 1kk
+# payer= Player(age="34",waight="76",hieght="175",gender="male",nick="39",waist="93",player_activ="5",player_target="weight_loss",num_train_per_weak="6",num_of_meals_per_day="3")
+# print("fats",payer.fats())
+# print("fats discriptions",payer.fats_discription())
+# # print("target cals",payer.target_cals())
+# print("cals",payer.cals())
+# print("target breakfast",payer.get_cals_for_breakfast())
+# print("target dinner",payer.get_cals_for_dinner())
+# print("additional",payer.get_cals_for_launch())
+# print("ideal fats",payer.ideal_fat())
+# print("protien",payer.get_min_protien())
+# print("carvs",payer.target_carbs())
+# #name,age,waight,hieght,gender,nick,waist,num_train_per_weak,player_target,player_activ,num_of_meals_per_day
+# # payer1= Player("mohammed","25","86","183","male","41","99","15","weight_loss","3","3")
+# # payer2= Player("esraa","25","86","183","male","41","99","15","weight_loss","4","4")
+# # payer3= Player("mohammedy","25","86","183","male","41","99","15","weight_loss","5","5")
+# # payer4= Player("magdi","25","86","183","male","41","99","15","weight_loss","6","6")
+# # payer.add_name_data()
+# # payer1.add_name_data()
+# # payer2.add_name_data()
+# # payer3.add_name_data()
+# # payer4.add_name_data()
+# # print(payer.fats(),payer.fats_discription())
+# # print(payer.get_cals_for_breakfast(),"cals for break fast","prtin up",payer.get_max_protien()," min ",int(payer.get_min_protien()))
+# # print(payer.target_cals(),"target cals")
+# # print(payer.get_max_protien(),"protiens")
+# # print(payer.fats())
+# # print(payer.target_carbs())
+# # print(payer.)
+# # #to lose 0.5kg / weak 69% of cals
+# #90% .25kg
+# #61% 1kk
